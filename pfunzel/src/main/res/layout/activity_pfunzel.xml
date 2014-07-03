@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:clickable="true"
+    android:onClick="toggle"
+    tools:context=".Pfunzel" >
+
+    <SurfaceView
+        android:id="@+id/PREVIEW"
+        android:layout_width="1dip"
+        android:layout_height="1dip"
+        />
+
+    <com.stahlnow.android.pfunzel.PfunzelBackground
+        android:id="@+id/background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+    </com.stahlnow.android.pfunzel.PfunzelBackground>
+
+    <ImageButton
+        android:id="@+id/pfunzel_switch"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:translationX="274dp"
+        android:translationY="1dp"
+        android:background="@drawable/pfunzel_switch_off" />
+<!--
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pfunzel"
+        android:src="@drawable/pfunzel"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pfunzel_lense"
+        android:src="@drawable/pfunzel_lense"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+-->
+
+
+
+</RelativeLayout>
