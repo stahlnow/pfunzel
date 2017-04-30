@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pfunzel</string>
+    <string name="buttonState">KEY_BUTTON_STATE</string>
+    <string name="switchState">KEY_SWITCH_STATE</string>
+</resources>

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher_round.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    }
+]

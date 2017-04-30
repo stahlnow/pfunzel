@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_button.xml",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_button.xml"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_switch_on.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_switch_on.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_smaller.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_smaller.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_mask.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_mask.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_lense.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_lense.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_light_red.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_light_red.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_button_on.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_button_on.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_switch.xml",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_switch.xml"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_light_brown.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_light_brown.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_switch_off.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_switch_off.png"
+    },
+    {
+        "merged": "/home/stahl/droid/Pfunzel/app/build/intermediates/res/merged/debug/drawable/pfunzel_light_green.png",
+        "source": "/home/stahl/droid/Pfunzel/app/src/main/res/drawable/pfunzel_light_green.png"
+    }
+]
