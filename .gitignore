@@ -8,6 +8,8 @@
 /captures
 .externalNativeBuild
 
+app/build/
+
 .idea/markdown-navigator/
 .idea/markdown-navigator.xml
 .idea/vcs.xml
