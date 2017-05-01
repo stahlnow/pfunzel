@@ -1,0 +1,184 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:keepScreenOn="true"
+    android:clickable="true"
+    android:onClick="toggle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333"
+            android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/pfunzel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/pfunzel_button"
+                android:textOn=""
+                android:textOff=""
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.9" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333"
+            android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/pfunzel_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/pfunzel_switch"
+                android:textOn=""
+                android:textOff=""
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.9" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:id="@+id/pfunzel"
+            android:src="@drawable/pfunzel_smaller" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4" />
+
+            <com.stahlnow.android.pfunzel.VerticalSeekBar
+                android:id="@+id/pfunzel_slider_left"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+
+                android:paddingTop="18dp"
+
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.6"
+                android:max="100"
+                android:indeterminate="false"
+                android:progressDrawable="@android:color/transparent"
+                android:thumbOffset="-10dp"
+                android:thumb="@drawable/kultpfunzel_button_red_01a" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4" />
+
+            <com.stahlnow.android.pfunzel.VerticalSeekBar
+                android:id="@+id/pfunzel_slider_right"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+
+                android:paddingTop="25dp"
+
+                android:layout_weight="0.6"
+                android:max="100"
+                android:indeterminate="false"
+                android:progressDrawable="@android:color/transparent"
+                android:thumbOffset="-10dp"
+                android:thumb="@drawable/kultpfunzel_button_green_01a" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:alpha="0.1"
+            android:tint="@color/white"
+            android:tintMode="multiply"
+            android:id="@+id/pfunzel_lense"
+            android:src="@drawable/pfunzel_lense" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:id="@+id/pfunzel_mask"
+            android:src="@drawable/pfunzel_mask"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+
+
+</FrameLayout>

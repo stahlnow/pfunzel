@@ -23,7 +23,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId 'com.stahlnow.android.pfunzel'
-        minSdkVersion 23
+        minSdkVersion 14
         targetSdkVersion 25
     }
     buildTypes {

@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.9" />
+
         </LinearLayout>
 
         <Space
@@ -59,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.9" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -77,29 +79,30 @@
     </LinearLayout>
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4" />
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4" />
 
             <com.stahlnow.android.pfunzel.VerticalSeekBar
                 android:id="@+id/pfunzel_slider_left"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="0.6"
                 android:max="100"
                 android:indeterminate="false"
@@ -107,24 +110,39 @@
                 android:thumbOffset="-10dp"
                 android:thumb="@drawable/kultpfunzel_button_red_01a" />
 
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.333"
+            android:orientation="vertical">
+
             <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6" />
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4" />
 
             <com.stahlnow.android.pfunzel.VerticalSeekBar
                 android:id="@+id/pfunzel_slider_right"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+                android:progressTint="@color/white"
                 android:layout_weight="0.6"
                 android:max="100"
                 android:indeterminate="false"
                 android:progressDrawable="@android:color/transparent"
                 android:thumbOffset="-10dp"
                 android:thumb="@drawable/kultpfunzel_button_green_01a" />
-        </LinearLayout>
 
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -135,7 +153,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
-            android:alpha="0.9"
+            android:alpha="0.1"
             android:tint="@color/white"
             android:tintMode="multiply"
             android:id="@+id/pfunzel_lense"

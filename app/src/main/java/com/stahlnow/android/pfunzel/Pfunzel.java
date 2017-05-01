@@ -1,23 +1,34 @@
 package com.stahlnow.android.pfunzel;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
+
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCharacteristics;
+import android.graphics.SurfaceTexture;
+
+
+import android.hardware.Camera;
+
+import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
-import android.hardware.camera2.CameraManager;
+
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 
 import com.stahlnow.pfunzel.R;
+
+import java.io.IOException;
 
 
 public class Pfunzel extends Activity {
@@ -27,7 +38,6 @@ public class Pfunzel extends Activity {
 	private boolean isOn;
     private boolean blueIsOn;
 
-    private CameraManager manager;
     private VerticalSeekBar pfunzel_slider_left;
     private VerticalSeekBar pfunzel_slider_right;
     private ToggleButton pfunzel_button;
@@ -35,13 +45,24 @@ public class Pfunzel extends Activity {
     private ImageView mask;
     private ImageView lense;
 
+    // support for api < 23
+    private Camera mCamera;
+
+    // support for api > 23
+    private Camera2Object mCamera2Object;
+    private float mBrightness;
+
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pfunzel);
 		isOn = false;
-        manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mCamera2Object = new Camera2Object(this);
+        }
 
         // get reference to all ui elements
         pfunzel_slider_left = (VerticalSeekBar) findViewById(R.id.pfunzel_slider_left);
@@ -62,15 +83,21 @@ public class Pfunzel extends Activity {
         pfunzel_slider_left.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // f(x) = log(1+x)/log(1+max)
+                // with minimum != 0 better use:
+                // f(x) = log(x/min) / log(max/min)
+                float bLog = (float)(Math.log(mBrightness/1.0) / Math.log(255.0/1.0));
+                float alpha = clamp(bLog, 0.6f, 0.9f);
+
                 if (!blueIsOn)
-                    lense.setAlpha(Math.min(0.9f, Math.max((float)(progress/100.0), (float)(pfunzel_slider_right.getProgress()/100.0) )));
+                    lense.setAlpha(Math.min(alpha, Math.max((float)(progress/100.0), (float)(pfunzel_slider_right.getProgress()/100.0) )));
                 else
-                    lense.setAlpha(0.9f);
+                    lense.setAlpha(alpha);
                 lense.setColorFilter(Color.argb(
                         255,
                         (int)((progress/100.0)*255),
                         (int)((pfunzel_slider_right.getProgress()/100.0)*255),
-                        blueIsOn ? ((int)(Math.max(0.9f, Math.max((float)(progress/100.0), (float)(pfunzel_slider_right.getProgress()/100.0) ))*255)) : 0),
+                        blueIsOn ? ((int)(Math.max(alpha, Math.max((float)(progress/100.0), (float)(pfunzel_slider_right.getProgress()/100.0) ))*255)) : 0),
                         PorterDuff.Mode.MULTIPLY);
             }
             @Override
@@ -82,15 +109,19 @@ public class Pfunzel extends Activity {
         pfunzel_slider_right.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                float bLog = (float)(Math.log(mBrightness/1.0) / Math.log(255.0/1.0));
+                float alpha = clamp(bLog, 0.6f, 0.9f);
+
                 if (!blueIsOn)
-                    lense.setAlpha(Math.min(0.9f, Math.max((float)(progress/100.0), (float)(pfunzel_slider_left.getProgress()/100.0) )));
+                    lense.setAlpha(Math.min(alpha, Math.max((float)(progress/100.0), (float)(pfunzel_slider_left.getProgress()/100.0) )));
                 else
-                    lense.setAlpha(0.9f);
+                    lense.setAlpha(alpha);
                 lense.setColorFilter(Color.argb(
                         255,
                         (int)((pfunzel_slider_left.getProgress()/100.0)*255),
                         (int)((progress/100.0)*255),
-                        blueIsOn ? ((int)(Math.max(0.9f, Math.max((float)(progress/100.0), (float)(pfunzel_slider_left.getProgress()/100.0) ))*255)) : 0),
+                        blueIsOn ? ((int)(Math.max(alpha, Math.max((float)(progress/100.0), (float)(pfunzel_slider_left.getProgress()/100.0) ))*255)) : 0),
                         PorterDuff.Mode.MULTIPLY);
             }
             @Override
@@ -135,9 +166,11 @@ public class Pfunzel extends Activity {
                 updateSliders();
             }
         });
-
-
 	}
+
+    private static float clamp(float val, float min, float max) {
+        return Math.max(min, Math.min(max, val));
+    }
 
 	private void updateSliders() {
         int direction = 1;
@@ -164,58 +197,93 @@ public class Pfunzel extends Activity {
     @Override
     public void onPause() {
     	super.onPause();
-    	if (isOn)
+
+        if (isOn)
     		ledoff();
         SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(getResources().getString(R.string.buttonState), pfunzel_button.isChecked());
         editor.putBoolean(getResources().getString(R.string.switchState), pfunzel_switch.isChecked());
         editor.commit();
+
     }
     
     @Override
     public void onResume() {
     	super.onResume();
+
+        try {
+            mBrightness = (float)(Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
+        } catch (Settings.SettingNotFoundException e) {
+            mBrightness = 255.0f;
+            Log.w(TAG, e.toString());
+        }
+
     	if (!isOn)
     		ledon();
+
+        updateSliders(); // screen brightness could have changed..
+
         SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
         if (pfunzel_button != null)
             pfunzel_button.setChecked(sharedPref.getBoolean(getResources().getString(R.string.buttonState), false));
         if (pfunzel_switch != null)
             pfunzel_switch.setChecked(sharedPref.getBoolean(getResources().getString(R.string.switchState), false));
+
     }
 
-	
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	private void ledon() {
 
-        try {
-            String[] cams = manager.getCameraIdList();
 
-            CameraCharacteristics characteristics = manager.getCameraCharacteristics(cams[0]);
-            if (characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)) {
-                manager.setTorchMode(cams[0], true);
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+
+            // Does the device have a camera?
+            PackageManager pm = getPackageManager();
+            if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+                Log.e(TAG, "Device has no camera!");
+            } else {
+                // In order to work, the camera needs a surface to turn on.
+                // Here I pass it a dummy Surface Texture to make it happy.
+                mCamera = Camera.open();
+                try {
+                    mCamera.setPreviewTexture(new SurfaceTexture(0));
+                } catch (IOException e) {
+                    Log.e(TAG, e.toString());
+                }
+                mCamera.startPreview();
+                Camera.Parameters p = mCamera.getParameters();
+                p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                mCamera.setParameters(p);
             }
 
-        } catch (CameraAccessException e) {
-            Log.e(TAG, "Can't access camera.");
-        }
 
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (mCamera2Object != null)
+                mCamera2Object.ledon();
+        }
 
 		isOn = true;
 	}
 
 	private void ledoff() {
 
-        try {
-            String[] cams = manager.getCameraIdList();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
 
-            CameraCharacteristics characteristics = manager.getCameraCharacteristics(cams[0]);
-            if (characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)) {
-                manager.setTorchMode(cams[0], false);
+            if (mCamera != null) {
+                // Stopping the camera is enough to turn off the LED
+                mCamera.stopPreview();
+                mCamera.release();
+                mCamera = null;
             }
 
-        } catch (CameraAccessException e) {
-            Log.e(TAG, "Can't access camera.");
+
+        } else if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+            if (mCamera2Object != null)
+                mCamera2Object.ledoff();
+
         }
 
 		isOn = false;
